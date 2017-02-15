@@ -1,0 +1,47 @@
+{{template "header"}}
+		<title>文章 - 我的 beego 博客</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<h1>策略列表</h1>
+			<a type="submit" class="btn btn-default" href="/strategy/add">添加策略</a>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>策略编号</th>
+						<th>策略名称</th>
+						<th>发送方式</th>
+						<th>发送条件</th>
+						<th>目标人员</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>{{.strategy_id}}</th>
+						<th>{{.strategy_name}}</th>
+						<th>{{.strategy_conditions}}</th>
+						<th>{{.sending_method}}</th>
+						<th>{{.send_to}}</th>
+						<th>
+							<a href="/strategy/modify?tid={{.strategy_id}}">修改</a>
+							<a href="/strategy/delete?tid={{.strategy_id}}">删除</a>
+						</th>
+					</tr>
+					<!-- <tr>
+						<th>333</th>
+						<th>444</th>
+						<th>555</th>
+						<th>666</th>
+						<th>777</th>
+						<th>888</th>
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
+
+		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	</body>
+</html>

@@ -2,17 +2,28 @@ package main
 
 import (
 	"AlarmService/controllers"
-	//	"AlarmService/models"
+	"AlarmService/models"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 )
+
+func init() {
+	models.RegisterDB()
+}
 
 func main() {
 
+	orm.Debug = true
+	orm.RunSyncdb("default", false, true)
+	beego.Info("admin")
 	beego.Router("/", &controllers.HomeController{})
 	beego.Router("/login", &controllers.LoginController{})
-	beego.Router("/strategy", &controllers.AlarmStrategy{})
-	beego.Router("/strategy/add", &controllers.AlarmStrategy{}, "post:Add")
-	beego.Router("/strategy/delete", &controllers.AlarmStrategy{}, "post:Delete")
+	beego.Router("/strategy", &controllers.StrategyController{})
+	beego.AutoRouter(&controllers.StrategyController{})
+	//	User
+	beego.Router("/user", &controllers.UserController{})
+	beego.AutoRouter(&controllers.UserController{})
 	beego.Router("/eventlog", &controllers.LoginController{})
 	beego.Router("/operationlog", &controllers.LoginController{})
 	beego.Router("/config", &controllers.LoginController{})

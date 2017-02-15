@@ -1,0 +1,46 @@
+{{template "header"}}
+		<title>策略列表 - 告警告知</title>
+	</head>
+
+	<body>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                {{template "navbar"}}
+            </div>  
+        </div>
+		<div class="container">
+			<h1>策略列表</h1>
+ 			<a type="submit" class="btn btn-default" href="/strategy/add">添加策略</a>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>策略编号</th>
+						<th>策略名称</th>
+						<th>发送方式</th>
+						<th>发送条件</th>
+						<th>目标人员</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{range .AlarmStrategy}}
+					<tr>
+						<th>{{.Id}}</th>
+						<th>{{.Strategy_name}}</th>
+						<th>{{.Sending_method}}</th>
+						<th>{{.Strategy_conditions}}</th>
+						<th>{{.Send_to}}</th>
+						<th>
+							<a href="/strategy/modify?tid={{.Id}}">修改</a>
+							<a href="/strategy/delete?tid={{.Id}}">删除</a>
+						</th>
+					</tr>
+					{{end}}
+				</tbody>
+			</table>
+		</div>
+
+		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+	</body>
+</html>
