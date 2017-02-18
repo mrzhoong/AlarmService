@@ -11,19 +11,15 @@
 		<div class="container">
 			<h1>增加策略</h1>
 			<form method="post" action="/strategy" enctype="multipart/form-data">
-<!-- 				<div class="form-group">
-					<label>策略编号：</label>
-					<input type="text" class="form-control" name="strategy_id">
-				</div> -->
 				
 				<div class="form-group">
 					<label>策略名称：</label>
 					<input type="text" class="form-control" name="strategy_name">
 				</div>
-				
+
 				<div class="form-group">
-					<label>发送方式：</label>
-					<input type="text" class="form-control" name="sending_method">
+					<label>目标人员：</label>
+					<input type="text" class="form-control" name="send_to">
 				</div>
 
 				<div class="form-group">
@@ -32,9 +28,10 @@
 				</div>
 
 				<div class="form-group">
-					<label>目标人员：</label>
-					<input type="text" class="form-control" name="send_to">
+					<label>发送方式：</label>
+					<input type="text" class="form-control" name="sending_method">
 				</div>
+				
 				<button type="submit" class="btn btn-default">添加策略</button>
 			</form>
 		</div>

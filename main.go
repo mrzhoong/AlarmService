@@ -16,7 +16,6 @@ func main() {
 
 	orm.Debug = true
 	orm.RunSyncdb("default", false, true)
-	beego.Info("admin")
 	beego.Router("/", &controllers.HomeController{})
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/strategy", &controllers.StrategyController{})
@@ -27,5 +26,6 @@ func main() {
 	beego.Router("/eventlog", &controllers.LoginController{})
 	beego.Router("/operationlog", &controllers.LoginController{})
 	beego.Router("/config", &controllers.LoginController{})
+	beego.Router("/test", &controllers.TestController{})
 	beego.Run()
 }

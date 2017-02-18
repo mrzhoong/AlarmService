@@ -11,29 +11,66 @@ import (
 // 	// 设置数据库路径
 // 	_DB_NAME = "data/beeblog.db"
 // 	// 设置数据库名称
-// 	_SQLITE3_DRIVER = "sqlite3"
+// 	_MYSQL_DRIVER = "MYSQL"
 // )
 
 //  策略
 type Strategy struct {
+	//	唯一性标志
 	Id int64
 	// Strategy_id         int64
-	Strategy_name       string
+	//	策略名称，即组名称
+	Strategy_name string
+	//	策略条件
 	Strategy_conditions string
-	Sending_method      string
-	Send_to             string
+	//	发送方式
+	Sending_method string
+	//	发送人员
+	Send_to string
+}
+
+//	告警条件
+type AlarmConditions struct {
+	Id int64
+	//	策略ID
+	Strategy_id int64
+	Level_msg   string
+	Content     string
+}
+
+//	发送方式
+type SendMethods struct {
+	Id int64
+	//	策略ID
+	Strategy_id int64
+	//	发送方式对应编号
+	sending_type    []int64
+	repeat_interval int64
+}
+
+//	发送方式对应类型
+type SendType struct {
+	Id       int64
+	TypeName string
 }
 
 // 告警源
 
 // 用户
 type User struct {
-	Id                int64
-	Name              string
-	Tel               string
-	Email             string
-	Wechat            string
+	//	唯一性标志
+	Id int64
+	//	用户名称
+	Name string
+	//	手机号码，非座机
+	Tel string
+	//	邮箱
+	Email string
+	//	微信账号
+	Wechat string
+	//	组织编号
 	Organization_code int64
+	//	组织名称
 	Organization_name string
 }
 
@@ -89,6 +126,7 @@ func AddStrategy(name string, methods string, conditions string, send_to string)
 	return nil
 }
 
+//	获取某个策略
 func GetStrategy(tid string) (*Strategy, error) {
 	//	change tid into int
 	tidNum, err := strconv.ParseInt(tid, 10, 64)
@@ -110,6 +148,7 @@ func GetStrategy(tid string) (*Strategy, error) {
 	return strategy, nil
 }
 
+//	删除策略
 func DeleteStrategy(tid string) error {
 	tidNum, err := strconv.ParseInt(tid, 10, 64)
 	if err != nil {
@@ -128,6 +167,7 @@ func DeleteStrategy(tid string) error {
 	return nil
 }
 
+//	修改策略
 func ModifyStrategy(tid string, name string, methods string, conditions string, send_to string) error {
 	tidNum, err := strconv.ParseInt(tid, 10, 64)
 	if err != nil {
@@ -149,4 +189,31 @@ func ModifyStrategy(tid string, name string, methods string, conditions string, 
 	}
 
 	return nil
+}
+
+//	获取策略组信息，组包含设备信息
+func GetStrategyGroupInfo() (str string, err error) {
+	str = `{"errcode": "00000", "info": [["空调组", "0001"],"UPS组":"0002"]}`
+
+	return str, nil
+}
+
+//	获取人员信息列表
+func GetUserGroupInfo() (str string, err error) {
+	str = `{"errcode": "00000","info": [["小明","000223"],["小敏","000437"]]}`
+
+	return str, nil
+}
+
+//	获取Id对应的人名信息
+func GetUserName(Id int64) string {
+	user := new(User)
+	o := orm.NewOrm()
+	qs := o.QueryTable("User")
+	err := qs.Filter("Id", Id).One(user)
+	if err != nil {
+		return "未找到"
+	}
+
+	return user.Name
 }
