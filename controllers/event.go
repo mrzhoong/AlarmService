@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"AlarmService/redis"
 )
 
 type EventController struct {
@@ -21,5 +22,8 @@ func (this *EventController) Get() {
 	Content := this.GetString("content")
 	Equip := this.GetString("equip")
 	s := EventTime + Content + Equip
+
+	redis.WriteSms(EventTime, Content)
+
 	this.Ctx.WriteString(s)
 }

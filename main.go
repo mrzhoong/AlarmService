@@ -2,13 +2,17 @@ package main
 
 import (
 	"AlarmService/controllers"
+	"AlarmService/g"
 	"AlarmService/models"
+	"AlarmService/redis"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func init() {
+	g.LoadConfig()
+	redis.InitConnPool()
 	models.RegisterDB()
 }
 
@@ -16,6 +20,7 @@ func main() {
 
 	orm.Debug = true
 	orm.RunSyncdb("default", false, true)
+
 	beego.Router("/", &controllers.HomeController{})
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/strategy", &controllers.StrategyController{})

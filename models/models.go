@@ -1,6 +1,7 @@
 package models
 
 import (
+	"AlarmService/g"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
@@ -19,7 +20,7 @@ type Strategy struct {
 	//	唯一性标志
 	Id int64
 	//	需要发送的设备组编号
-	StrategyId         string
+	StrategyId string
 	//	策略名称，即组名称
 	StrategyName string
 	//	策略条件
@@ -36,7 +37,7 @@ type AlarmConditions struct {
 	//	策略ID
 	StrategyId int64
 	LevelMsg   string
-	Content     string
+	Content    string
 }
 
 //	发送方式
@@ -45,7 +46,7 @@ type SendMethods struct {
 	//	策略ID
 	StrategyId int64
 	//	发送方式对应编号
-	SendType    []int64
+	SendType       []int64
 	RepeatInterval int64
 }
 
@@ -76,17 +77,12 @@ type User struct {
 }
 
 func RegisterDB() {
-	dbhost := beego.AppConfig.String("dbhost")
-	dbport := beego.AppConfig.String("dbport")
-	dbuser := beego.AppConfig.String("dbuser")
-	dbpwd := beego.AppConfig.String("dbpwd")
-	dbname := beego.AppConfig.String("dbname")
 	// 注册模型
 	orm.RegisterModel(new(Strategy), new(User), new(SendType))
 	// mysql 属于默认注册，此处代码可省略）
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	// 注册默认数据库
-	conn := dbuser + ":" + dbpwd + "@tcp(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=utf8"
+	conn := g.Config().DbUser + ":" + g.Config().DbPwd + "@tcp(" + g.Config().DbHost + ":" + g.Config().DbPort + ")/" + g.Config().DbName + "?charset=utf8"
 	orm.RegisterDataBase("default", "mysql", conn)
 	// orm.RegisterDataBase("default", "mysql", "root:123456@/default?charset=utf8")
 }
@@ -98,10 +94,6 @@ func GetAllStrategys() ([]*Strategy, error) {
 
 	qs := o.QueryTable("strategy")
 	_, err := qs.All(&strategys)
-	// strategys := []Strategy{Strategy{Strategy_id: 1, Strategy_name: "联通", Strategy_conditions: "实时", Sending_method: "微信", Send_to: "秦羽"},
-	// 	Strategy{Strategy_id: 2, Strategy_name: "华为", Strategy_conditions: "实时", Sending_method: "短信", Send_to: "张三"},
-	// 	Strategy{Strategy_id: 3, Strategy_name: "科技部", Strategy_conditions: "定时", Sending_method: "邮件", Send_to: "李四,王五"},
-	// 	Strategy{Strategy_id: 4, Strategy_name: "中联值班组", Strategy_conditions: "实时", Sending_method: "电话", Send_to: "332"}}
 	return strategys, err
 }
 
@@ -115,10 +107,10 @@ func AddStrategy(name string, methods string, conditions string, send_to string)
 
 	o := orm.NewOrm()
 	strategy := &Strategy{
-		StrategyName:       name,
-		SendMethod:      methods,
+		StrategyName:      name,
+		SendMethod:        methods,
 		StrategyCondition: conditions,
-		SendTo:             send_to,
+		SendTo:            send_to,
 	}
 	_, err := o.Insert(strategy)
 	if err != nil {
