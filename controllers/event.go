@@ -19,7 +19,7 @@ func (this *EventController) Get() {
 	// url:= this.URLFor(endpoint, ...)
 	EventTime := this.GetString("time")
 	Content := this.GetString("content")
-	EquipId := this.GetString("equip")
-	s := EventTime + Content + EquipId
+	Equip := this.GetString("equip")
+	s := EventTime + Content + Equip
 	this.Ctx.WriteString(s)
 }
