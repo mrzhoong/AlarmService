@@ -26,10 +26,10 @@
 					{{range .AlarmStrategy}}
 					<tr>
 						<th>{{.Id}}</th>
-						<th>{{.Strategy_name}}</th>
-						<th>{{.Sending_method}}</th>
-						<th>{{.Strategy_conditions}}</th>
-						<th>{{.Send_to}}</th>
+						<th>{{.StrategyName}}</th>
+						<th>{{.SendMethod}}</th>
+						<th>{{.StrategyCondition}}</th>
+						<th>{{.SendTo}}</th>
 						<th>
 							<a href="/strategy/modify?tid={{.Id}}">修改</a>
 							<a href="/strategy/delete?tid={{.Id}}">删除</a>

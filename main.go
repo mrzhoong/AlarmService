@@ -27,5 +27,6 @@ func main() {
 	beego.Router("/operationlog", &controllers.LoginController{})
 	beego.Router("/config", &controllers.LoginController{})
 	beego.Router("/test", &controllers.TestController{})
+	beego.Router("/event", &controllers.EventController{})
 	beego.Run()
 }

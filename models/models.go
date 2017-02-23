@@ -18,23 +18,24 @@ import (
 type Strategy struct {
 	//	唯一性标志
 	Id int64
-	// Strategy_id         int64
+	//	需要发送的设备组编号
+	StrategyId         string
 	//	策略名称，即组名称
-	Strategy_name string
+	StrategyName string
 	//	策略条件
-	Strategy_conditions string
+	StrategyCondition string
 	//	发送方式
-	Sending_method string
+	SendMethod string
 	//	发送人员
-	Send_to string
+	SendTo string
 }
 
 //	告警条件
 type AlarmConditions struct {
 	Id int64
 	//	策略ID
-	Strategy_id int64
-	Level_msg   string
+	StrategyId int64
+	LevelMsg   string
 	Content     string
 }
 
@@ -42,16 +43,16 @@ type AlarmConditions struct {
 type SendMethods struct {
 	Id int64
 	//	策略ID
-	Strategy_id int64
+	StrategyId int64
 	//	发送方式对应编号
-	sending_type    []int64
-	repeat_interval int64
+	SendType    []int64
+	RepeatInterval int64
 }
 
 //	发送方式对应类型
 type SendType struct {
 	Id       int64
-	TypeName string
+	SendType string
 }
 
 // 告警源
@@ -69,9 +70,9 @@ type User struct {
 	//	微信账号
 	Wechat string
 	//	组织编号
-	Organization_code int64
+	OrganizationCode int64
 	//	组织名称
-	Organization_name string
+	OrganizationName string
 }
 
 func RegisterDB() {
@@ -81,7 +82,7 @@ func RegisterDB() {
 	dbpwd := beego.AppConfig.String("dbpwd")
 	dbname := beego.AppConfig.String("dbname")
 	// 注册模型
-	orm.RegisterModel(new(Strategy), new(User))
+	orm.RegisterModel(new(Strategy), new(User), new(SendType))
 	// mysql 属于默认注册，此处代码可省略）
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	// 注册默认数据库
@@ -114,10 +115,10 @@ func AddStrategy(name string, methods string, conditions string, send_to string)
 
 	o := orm.NewOrm()
 	strategy := &Strategy{
-		Strategy_name:       name,
-		Sending_method:      methods,
-		Strategy_conditions: conditions,
-		Send_to:             send_to,
+		StrategyName:       name,
+		SendMethod:      methods,
+		StrategyCondition: conditions,
+		SendTo:             send_to,
 	}
 	_, err := o.Insert(strategy)
 	if err != nil {
@@ -178,10 +179,10 @@ func ModifyStrategy(tid string, name string, methods string, conditions string, 
 	o := orm.NewOrm()
 	strategy := &Strategy{Id: tidNum}
 	if o.Read(strategy) == nil {
-		strategy.Strategy_name = name
-		strategy.Strategy_conditions = conditions
-		strategy.Sending_method = methods
-		strategy.Send_to = send_to
+		strategy.StrategyName = name
+		strategy.StrategyCondition = conditions
+		strategy.SendMethod = methods
+		strategy.SendTo = send_to
 		_, err = o.Update(strategy)
 		if err != nil {
 			return err
