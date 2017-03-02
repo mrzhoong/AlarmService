@@ -98,6 +98,8 @@ func (this *StrategyController) Modify() {
 
 func (this *StrategyController) View() {
 	// check login
-
+	// models.GetUserGroupInfo()
+	models.GetStrategyGroupInfo()
+	this.Ctx.WriteString("asd")
 	return
 }

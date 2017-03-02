@@ -2,6 +2,9 @@ package models
 
 import (
 	"AlarmService/g"
+	//"AlarmService/redis"
+	// "encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
@@ -14,6 +17,57 @@ import (
 // 	// 设置数据库名称
 // 	_MYSQL_DRIVER = "MYSQL"
 // )
+
+type Sms struct {
+	Tos     string `json:"tos"`
+	Content string `json:"content"`
+}
+
+type Mail struct {
+	Tos     string `json:"tos"`
+	Subject string `json:"subject"`
+	Content string `json:"content"`
+}
+
+//	告警源分类
+type StrategyList struct {
+	Id            int64
+	Name          string
+	StrategyInfos *StrategyInfo `orm:"rel(fk)"`
+}
+
+//	发送方式
+type SendMethod struct {
+	Id            int64
+	Name          string
+	StrategyInfos *StrategyInfo `orm:"rel(fk)"`
+}
+
+//	发送人员信息
+type SendTo struct {
+	Id            int64
+	Name          string
+	Mobile        string
+	WeChat        string
+	Email         string
+	StrategyInfos *StrategyInfo `orm:"rel(fk)"`
+}
+
+//	策略信息
+type StrategyInfo struct {
+	//	策略ID
+	Id int64
+	//	发送的组信息
+	EquipGroup []*StrategyList `orm:"reverse(many)"`
+	//	策略名称
+	Name string
+	//	条件，暂未处理
+	Condition string
+	//	发送方式
+	Method []*SendMethod `orm:"reverse(many)"`
+	//	发送人员
+	To []*SendTo `orm:"reverse(many)"`
+}
 
 //  策略
 type Strategy struct {
@@ -78,11 +132,13 @@ type User struct {
 
 func RegisterDB() {
 	// 注册模型
-	orm.RegisterModel(new(Strategy), new(User), new(SendType))
+	orm.RegisterModel(new(Strategy), new(User), new(SendType), new(StrategyInfo),
+		new(StrategyList), new(SendTo), new(SendMethod))
 	// mysql 属于默认注册，此处代码可省略）
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	// 注册默认数据库
-	conn := g.Config().DbUser + ":" + g.Config().DbPwd + "@tcp(" + g.Config().DbHost + ":" + g.Config().DbPort + ")/" + g.Config().DbName + "?charset=utf8"
+	conn := g.Config().DbUser + ":" + g.Config().DbPwd + "@tcp(" + g.Config().DbHost + ":" +
+		g.Config().DbPort + ")/" + g.Config().DbName + "?charset=utf8"
 	orm.RegisterDataBase("default", "mysql", conn)
 	// orm.RegisterDataBase("default", "mysql", "root:123456@/default?charset=utf8")
 }
@@ -185,16 +241,73 @@ func ModifyStrategy(tid string, name string, methods string, conditions string, 
 }
 
 //	获取策略组信息，组包含设备信息
-func GetStrategyGroupInfo() (str string, err error) {
-	str = `{"errcode": "00000", "info": [["空调组", "0001"],"UPS组":"0002"]}`
+func GetStrategyGroupInfo() (err error) {
+	o := orm.NewOrm()
+	strategys := new(StrategyInfo)
 
-	return str, nil
+	qs := o.QueryTable("strategy")
+	err = qs.One(strategys)
+	if err != nil {
+		beego.Error(err)
+	}
+	beego.Error(strategys.Name)
+
+	return nil
 }
 
 //	获取人员信息列表
 func GetUserGroupInfo() (str string, err error) {
 	str = `{"errcode": "00000","info": [["小明","000223"],["小敏","000437"]]}`
+	o := orm.NewOrm()
+	k := orm.NewOrm()
+	s2 := new(StrategyList)
+	s1 := new(StrategyInfo)
+	s3 := new(SendTo)
+	s4 := new(SendMethod)
+	////s1.Id = 2
+	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "暖通"})
+	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "高压"})
+	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "低压"})
+	s1.Name = "运维组"
+	s1.Condition = "Condition"
+	s1.Method = append(s1.Method, &SendMethod{Name: "电话"})
+	s1.Method = append(s1.Method, &SendMethod{Name: "微信"})
+	s1.To = append(s1.To, &SendTo{Name: "sam2", Mobile: "18503036522", WeChat: "eqwead_ew1_2", Email: "xxx@zktz.com"})
 
+	s2.StrategyInfos = s1
+	s2.Name = "暖通"
+
+	s3 = &SendTo{Name: "sam2", Mobile: "18503036522", WeChat: "eqwead_ew1_2", Email: "xxx@zktz.com"}
+	s3.StrategyInfos = s1
+
+	s4 = &SendMethod{Name: "电话"}
+	s4.StrategyInfos = s1
+	//
+	_, err = k.Insert(s1)
+	if err != nil {
+		fmt.Println(err)
+		return "nil", err
+	}
+	_, err = o.Insert(s2)
+
+	if err != nil {
+		fmt.Println(err)
+		return "nil", err
+	}
+
+	_, err = o.Insert(s3)
+
+	if err != nil {
+		fmt.Println(err)
+		return "nil", err
+	}
+
+	_, err = o.Insert(s4)
+
+	if err != nil {
+		fmt.Println(err)
+		return "nil", err
+	}
 	return str, nil
 }
 

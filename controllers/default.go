@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"AlarmService/models"
+	//"AlarmService/models"
 	"github.com/astaxie/beego"
 )
 
@@ -11,6 +11,6 @@ type TestController struct {
 
 func (c *TestController) Get() {
 	//c.TplName = "home.html"
-	str, _ := models.GetStrategyGroupInfo()
-	c.Ctx.WriteString(str)
+	//str, _ := models.GetStrategyGroupInfo()
+	c.Ctx.WriteString("test")
 }

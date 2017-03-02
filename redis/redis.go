@@ -1,8 +1,8 @@
 package redis
 
 import (
-	"github.com/garyburd/redigo/redis"
 	"AlarmService/g"
+	"github.com/garyburd/redigo/redis"
 	"log"
 	"time"
 )
@@ -32,4 +32,3 @@ func PingRedis(c redis.Conn, t time.Time) error {
 	}
 	return err
 }
-

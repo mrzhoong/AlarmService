@@ -2,14 +2,15 @@ package redis
 
 import (
 	//"AlarmService/redis"
+	"AlarmService/models"
 	"encoding/json"
 	"log"
 )
 
-type Sms struct {
-	Tos     string `json:"tos"`
-	Content string `json:"content"`
-}
+//type Sms struct {
+//	Tos     string `json:"tos"`
+//	Content string `json:"content"`
+//}
 
 func LPUSH(queue, message string) {
 	rc := ConnPool.Get()
@@ -22,11 +23,11 @@ func LPUSH(queue, message string) {
 }
 
 func WriteSms(tos string, content string) {
-	sms := &Sms{Tos: tos, Content: content}
+	sms := &models.Sms{Tos: tos, Content: content}
 	WriteSmsModel(sms)
 }
 
-func WriteSmsModel(sms *Sms) {
+func WriteSmsModel(sms *models.Sms) {
 	if sms == nil {
 		return
 	}
