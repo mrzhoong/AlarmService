@@ -12,6 +12,7 @@ import (
 
 func init() {
 	g.LoadConfig()
+	g.LoadCfg("cfg.json")
 	redis.InitConnPool()
 	models.RegisterDB()
 }

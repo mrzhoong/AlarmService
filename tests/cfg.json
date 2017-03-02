@@ -1,0 +1,138 @@
+{
+	"Count": 4,
+	"Ss": [{
+		"Id": 1,
+		"EquipGroup": [{
+			"Id": 1,
+			"Name": "高压"
+		},
+		{
+			"Id": 2,
+			"Name": "低压"
+		},
+		{
+			"Id": 3,
+			"Name": "暖通"
+		},
+		{
+			"Id": 4,
+			"Name": "弱电"
+		}],
+		"Name": "值班室",
+		"Condition": "Condition",
+		"Method": [{
+			"Id": 1,
+			"Name": "短信"
+		},
+		{
+			"Id": 4,
+			"Name": "邮件"
+		},
+		{
+			"Id": 3,
+			"Name": "微信"
+		}],
+		"To": [{
+			"Id": 1,
+			"Name": "张三",
+			"Mobile": "18500009999",
+			"WeChat": "wechat_1_1",
+			"Email": "xxx_1_1@zktz.com"
+		},
+		{
+			"Id": 2,
+			"Name": "李四",
+			"Mobile": "18600008888",
+			"WeChat": "wechat_1_2",
+			"Email": "xxx_1_2@zktz.com"
+		}]
+	},
+	{
+		"Id": 2,
+		"EquipGroup": [{
+			"Id": 1,
+			"Name": "高压2"
+		},
+		{
+			"Id": 2,
+			"Name": "抵押2"
+		},
+		{
+			"Id": 3,
+			"Name": "暖通2"
+		}],
+		"Name": "运维组",
+		"Condition": "Condition",
+		"Method": [{
+			"Id": 2,
+			"Name": "电话"
+		},
+		{
+			"Id": 3,
+			"Name": "微信"
+		}],
+		"To": [{
+			"Id": 1,
+			"Name": "sam2",
+			"Mobile": "18503036522",
+			"WeChat": "eqwead_ew1_2",
+			"Email": "xxx@zktz.com"
+		}]
+	},
+	{
+		"Id": 3,
+		"EquipGroup": [{
+			"Id": 1,
+			"Name": "风冷3"
+		},
+		{
+			"Id": 2,
+			"Name": "水冷3"
+		},
+		{
+			"Id": 3,
+			"Name": "弱点3"
+		}],
+		"Name": "运维组",
+		"Condition": "Condition",
+		"Method": [{
+			"Id": 3,
+			"Name": "微信"
+		}],
+		"To": [{
+			"Id": 1,
+			"Name": "sam3",
+			"Mobile": "18503036523",
+			"WeChat": "eqwead_ew1_2",
+			"Email": "xxx@zktz.com"
+		}]
+	},
+	{
+		"Id": 4,
+		"EquipGroup": [{
+			"Id": 1,
+			"Name": "name4"
+		},
+		{
+			"Id": 2,
+			"Name": "name4"
+		},
+		{
+			"Id": 3,
+			"Name": "暖通4"
+		}],
+		"Name": "运维组",
+		"Condition": "Condition",
+		"Method": [{
+			"Id": 4,
+			"Name": "邮件"
+		}],
+		"To": [{
+			"Id": 1,
+			"Name": "sam4",
+			"Mobile": "18503036524",
+			"WeChat": "eqwead_ew1_2",
+			"Email": "xxx@zktz.com"
+		}]
+	}]
+}

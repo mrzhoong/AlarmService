@@ -1,8 +1,7 @@
-package cron
+package redis
 
 import (
 	"AlarmService/models"
-	"AlarmService/redis"
 	"encoding/json"
 	"log"
 )
@@ -27,5 +26,5 @@ func WriteMailModel(mail *models.Mail) {
 		return
 	}
 
-	redis.LPUSH("/mail", string(bs))
+	LPUSH("/mail", string(bs))
 }
