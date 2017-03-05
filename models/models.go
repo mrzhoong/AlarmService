@@ -69,6 +69,26 @@ type StrategyInfo struct {
 	To []*SendTo `orm:"reverse(many)"`
 }
 
+//	告警事件
+type Event struct {
+	//	事件时间
+	EventTime int64 `json:"eventtime"`
+	//	位置信息
+	Location string `json:"eventlocation"`
+	//	设备ID
+	EquipID string `json:"equipid"`
+	//	设备名称
+	EquipName string `json:"equipname"`
+	//	事件级别
+	EventLevel int64 `json:"eventlevel"`
+	//	事件内容
+	Content string `json:"content"`
+	//	事件源组
+	StrategyID int64 `json:"strategyid"`
+	//	是否告警
+	IsAlarm bool `json:"isalarm"`
+}
+
 //  策略
 type Strategy struct {
 	//	唯一性标志

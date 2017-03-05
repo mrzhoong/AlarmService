@@ -2,63 +2,11 @@ package redis
 
 import (
 	"AlarmService/g"
+	"AlarmService/models"
 	"log"
 )
 
-//type StrategyList struct {
-//	Id   int64  `json:id`
-//	Name string `json:name`
-//}
-//
-//type SendMethod struct {
-//	Id   int64  `json:id`
-//	Name string `json:name`
-//}
-//
-//type SendTo struct {
-//	Id     int64  `json:id`
-//	Name   string `json:name`
-//	Mobile string `json:mobile`
-//	WeChat string `json:wechat`
-//	Email  string `json:email`
-//}
-
-type Event struct {
-	//	事件时间
-	EventTime int64 `json:"eventtime"`
-	//	位置信息
-	Location string `json:"eventlocation"`
-	//	设备ID
-	EquipID string `json:"equipid"`
-	//	设备名称
-	EquipName string `json:"equipname"`
-	//	事件级别
-	EventLevel int64 `json:"eventlevel"`
-	//	事件内容
-	Content string `json:"content"`
-	//	事件源组
-	StrategyID int64 `json:"strategyid"`
-	//	是否告警
-	IsAlarm bool `json:"isalarm"`
-}
-
-//
-//type StrategyInfo struct {
-//	//	策略ID
-//	Id int64 `json:id`
-//	//	发送的组信息
-//	EquipGroup []StrategyList `json:strategylist`
-//	//	策略名称
-//	Name string `json:name`
-//	//	条件，暂未处理
-//	Condition string `json:condition`
-//	//	发送方式
-//	Method []SendMethod `json:sendmethod`
-//	//	发送人员
-//	To []SendTo `json:sendto`
-//}
-
-func ProcData(event Event) {
+func ProcData(event models.Event) {
 	for j, s := range g.Cfg().Strategys {
 		log.Println("strategys NO:", j)
 		for k, v := range s.EquipGroup {
@@ -118,9 +66,5 @@ func SendPhone(queue string, M []g.SendTo) error {
 	for k, v := range M {
 		log.Println(queue, v.Mobile, "No:", k)
 	}
-	return nil
-}
-
-func AddStrategy() error {
 	return nil
 }
