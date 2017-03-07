@@ -8,6 +8,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"qiniupkg.com/x/errors.v7"
 	"strconv"
 )
 
@@ -18,16 +19,43 @@ import (
 // 	_MYSQL_DRIVER = "MYSQL"
 // )
 
+//	短信
 type Sms struct {
 	Tos     string `json:"tos"`
 	Content string `json:"content"`
 }
 
+//	邮件内容
 type Mail struct {
 	Tos     string `json:"tos"`
 	Subject string `json:"subject"`
 	Content string `json:"content"`
 }
+
+//	发送记录
+type SendRecord struct {
+	Id int64
+	//	站点
+	Station string
+	//	设备名称
+	EquipName string
+	//	发生时间
+	EventTime int64
+	//	事件级别
+	EventLevel int64
+	//	目标人员
+	Tos string
+	//	发送方式
+	SendType string
+	//	发送时间
+	SendTime int64
+	//	发送状态
+	SendStatus bool
+	//	发送内容
+	Content string
+}
+
+//	操作记录
 
 //	告警源分类
 type StrategyList struct {
@@ -153,7 +181,7 @@ type User struct {
 func RegisterDB() {
 	// 注册模型
 	orm.RegisterModel(new(Strategy), new(User), new(SendType), new(StrategyInfo),
-		new(StrategyList), new(SendTo), new(SendMethod))
+		new(StrategyList), new(SendTo), new(SendMethod), new(SendRecord))
 	// mysql 属于默认注册，此处代码可省略）
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	// 注册默认数据库
@@ -342,4 +370,23 @@ func GetUserName(Id int64) string {
 	}
 
 	return user.Name
+}
+
+//	发送记录模块
+func AddSendRecord(s *SendRecord) error {
+	o := orm.NewOrm()
+
+	if s == nil {
+		return errors.New("Record is nil")
+	}
+
+	_, err := o.Insert(s)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func GetSendRecord() {
+
 }

@@ -6,16 +6,16 @@ import (
 	"log"
 )
 
-func WriteMail(tos string, subject, content string) {
+func WriteMail(tos string, subject string, E models.Event) {
 	if len(tos) == 0 {
 		return
 	}
 
-	mail := &models.Mail{Tos: tos, Subject: subject, Content: content}
-	WriteMailModel(mail)
+	mail := &models.Mail{Tos: tos, Subject: subject, Content: E.Content}
+	WriteMailModel(mail, E)
 }
 
-func WriteMailModel(mail *models.Mail) {
+func WriteMailModel(mail *models.Mail, E models.Event) {
 	if mail == nil {
 		return
 	}
@@ -26,5 +26,5 @@ func WriteMailModel(mail *models.Mail) {
 		return
 	}
 
-	LPUSH("/mail", string(bs))
+	LPUSH("/mail", string(bs), E)
 }
