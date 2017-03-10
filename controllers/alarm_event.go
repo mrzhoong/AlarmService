@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	// "log"
 	"encoding/json"
+	"fmt"
 )
 
 type EventController struct {
@@ -38,8 +39,21 @@ func (this *EventController) Get() {
 	this.Ctx.WriteString("OK")
 }
 
-func (this *EventController) Post() {
-	var event models.Event
-	json.Unmarshal(this.Ctx.Input.RequestBody, &event)
-	// this.Ctx.WriteString(event.EquipID)
+func (c *EventController) Post() {
+
+	c.Ctx.Output.Header("Access-Control-Allow-Origin", "*")
+	c.Ctx.Output.Header("Access-Control-Allow-Headers", "X-Requested-With")
+	c.Ctx.Output.Header("Access-Control-Allow-Method", "POST,GET,OPTIONS")
+
+	//url := c.Ctx.Request.RequestURI
+	//	fmt.Println("[" + url + "]")
+	fmt.Println(c.Ctx.Request.RequestURI)
+	//fmt.Println(string(c.Ctx.Input.RequestBody))
+
+	var ob models.Event
+	json.Unmarshal(c.Ctx.Input.RequestBody, &ob)
+
+	fmt.Println(ob.Content)
+	c.Ctx.WriteString(string(c.Ctx.Input.RequestBody))
+	return
 }

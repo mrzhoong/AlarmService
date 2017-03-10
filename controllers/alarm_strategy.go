@@ -62,6 +62,8 @@ func (this *StrategyController) Add() {
 
 	this.TplName = "strategy_add.html"
 
+	this.Data["User"] = []string{"过敏", "张三", "李四", "王五", "赵六"}
+	this.Data["SendType"] = []string{"短信", "电话", "微信", "邮件"}
 	// this.Data["IsLogin"] = true
 
 	return

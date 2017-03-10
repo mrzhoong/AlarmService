@@ -1,47 +1,102 @@
 {{template "header"}}
-		<title>文章 - 我的 beego 博客</title>
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css">
+		<title>发送记录 - 告警告知</title>
 	</head>
 
 	<body>
-		<div class="container">
-			<h1>策略列表</h1>
-			<a type="submit" class="btn btn-default" href="/strategy/add">添加策略</a>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>策略编号</th>
-						<th>策略名称</th>
-						<th>发送方式</th>
-						<th>发送条件</th>
-						<th>目标人员</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th>{{.strategy_id}}</th>
-						<th>{{.strategy_name}}</th>
-						<th>{{.strategy_conditions}}</th>
-						<th>{{.sending_method}}</th>
-						<th>{{.send_to}}</th>
-						<th>
-							<a href="/strategy/modify?tid={{.strategy_id}}">修改</a>
-							<a href="/strategy/delete?tid={{.strategy_id}}">删除</a>
-						</th>
-					</tr>
-					<!-- <tr>
-						<th>333</th>
-						<th>444</th>
-						<th>555</th>
-						<th>666</th>
-						<th>777</th>
-						<th>888</th>
-					</tr> -->
-				</tbody>
-			</table>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				{{template "navbar" .}}
+			</div>	
 		</div>
-
+		<div class="container">
+			<form id="form1" method="post" action="">
+                <div class="input-group date form_datetime">
+                    <label class="font-noraml">开始时间</label>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" name="begin_time" value="">
+                </div>
+                <div class="input-group date form_endtime">
+                    <label class="font-noraml">结束时间</label>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" end_time value="">
+                </div>
+                    <input type="text" placeholder="站点" name="station" style="width:20%">
+                    <input type="text" placeholder="设备" name="equip_name" style="width:20%">
+                    <input type="text" placeholder="目标人员" name="send_to" style="width:10%">
+                    <input type="text" placeholder="发送方式" name="send_type" style="width:10%">
+                    <button type="submit" class="btn btn-sm btn-primary"> 搜索</button> 
+                <!-- </div> -->
+			</form>
+	    </div>
+		<div class="container">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>站点</th>
+                                    <th>设备</th>
+                                    <th>告警时间</th>
+                                    <th>事件详述</th>
+                                    <th>级别</th>
+                                    <th>目标人员</th>
+                                    <th>发送时间</th>
+                                    <th>发送状态</th>
+                                    <th>发送方式</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	{{range .SendRecord}}
+                                <tr>
+                                    <td>{{.Id}}</td>
+                                    <td><span class="line">{{.Station}}</span></td>
+                                    <td>{{.EquipName}}</td>
+                                    <td class="text-navy">{{.EventTime}}</td>
+                                    <td>{{.Content}}</td>
+                                    <td>{{.EventLevel}}</td>
+                                    <td>{{.Tos}}</td>
+                                    <td>{{.SendTime}}</td>
+                                    <td>{{.SendStatus}}</td>
+                                    <td>{{.SendType}}</td>
+                                    <td>无</td>
+                                </tr>
+                                {{end}}
+     <!--                            <tr>
+                                    <td>2</td>
+                                    <td><span class="line">5,3,9,6,5,9,7,3,5,2</span>
+                                    </td>
+                                    <td>李四</td>
+                                    <td class="text-warning"> <i class="fa fa-level-down"></i> -20%</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><span class="line">1,6,3,9,5,9,5,3,9,6,4</span>
+                                    </td>
+                                    <td>王麻子</td>
+                                    <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
 		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js"></script>
+        <script type="text/javascript">
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd HH:ii",
+            autoclose:true,
+        });
+        $(".form_endtime").datetimepicker({
+            format: "yyyy-mm-dd HH:ii",
+            autoclose:true,
+        });
+        </script>  
 	</body>
 </html>

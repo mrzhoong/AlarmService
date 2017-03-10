@@ -1,4 +1,9 @@
 {{template "header"}}
+		<link rel="stylesheet" href="/static/css/bootstrap-tokenfield.css">
+		<link href="http://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.css" type="text/css" rel="stylesheet">
+   	    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css" type="text/css" rel="stylesheet">
+   	    <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
     	<title>增加策略 - 告警告知</title>
   	</head>
 
@@ -8,6 +13,10 @@
 				{{template "navbar" .}}
 			</div>	
 		</div>
+<!-- 		<div class="container">
+	        <input type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+	            <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+	    </div> -->
 		<div class="container">
 			<h1>增加策略</h1>
 			<form method="post" action="/strategy" enctype="multipart/form-data">
@@ -19,7 +28,7 @@
 
 				<div class="form-group">
 					<label>目标人员：</label>
-					<input type="text" class="form-control" name="send_to">
+					<input type="text" class="form-control"  id="tokenfield" name="send_to" value="">
 				</div>
 
 				<div class="form-group">
@@ -29,14 +38,45 @@
 
 				<div class="form-group">
 					<label>发送方式：</label>
-					<input type="text" class="form-control" name="sending_method">
+					<input type="text" class="form-control" id="tokenfieldsend" name="sending_method">
 				</div>
-				
+<!-- 				<div class="form-group" id="data_4">
+                    <label class="font-noraml">开始时间</label>
+                    <div class="input-group date form_datetime">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" class="form-control" value="">
+                    </div>
+                </div>
+				 -->
 				<button type="submit" class="btn btn-default">添加策略</button>
 			</form>
 		</div>
 		<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="http://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 		<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/static/js/bootstrap-tokenfield.js"></script>
+		<script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript">
+        $('#tokenfield').tokenfield({
+            autocomplete: {
+              source: {{.User}},
+              // source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+              delay: 100
+            },
+            showAutocompleteOnFocus: true
+          });
+  		$('#tokenfieldsend').tokenfield({
+            autocomplete: {
+              source: {{.SendType}},
+              // source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+              delay: 100
+            },
+            showAutocompleteOnFocus: true
+          });
+	    $(".form_datetime").datetimepicker({
+	        format: "yyyy-mm-dd HH:ii",
+	        autoclose:true,
+	    });
+		</script>  
 	</body>
 </html>
