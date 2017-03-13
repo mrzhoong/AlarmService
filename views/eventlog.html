@@ -15,19 +15,18 @@
                 <div class="input-group date form_datetime">
                     <label class="font-noraml">开始时间</label>
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" name="begin_time" value="">
+                    <input type="text" name="begin_time" value={{.begin_time}}>
                 </div>
                 <div class="input-group date form_endtime">
                     <label class="font-noraml">结束时间</label>
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="text" end_time value="">
+                    <input type="text" name="end_time" value={{.end_time}}>
                 </div>
                     <input type="text" placeholder="站点" name="station" style="width:20%">
                     <input type="text" placeholder="设备" name="equip_name" style="width:20%">
                     <input type="text" placeholder="目标人员" name="send_to" style="width:10%">
                     <input type="text" placeholder="发送方式" name="send_type" style="width:10%">
                     <button type="submit" class="btn btn-sm btn-primary"> 搜索</button> 
-                <!-- </div> -->
 			</form>
 	    </div>
 		<div class="container">

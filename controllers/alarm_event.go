@@ -6,7 +6,6 @@ import (
 	"github.com/astaxie/beego"
 	// "log"
 	"encoding/json"
-	"fmt"
 )
 
 type EventController struct {
@@ -28,7 +27,7 @@ func (this *EventController) Get() {
 	Location := this.GetString("location")
 	EquipName := this.GetString("equipname")
 	Level, _ := this.GetInt64("level")
-	IsAlarm, _ := this.GetBool("isalarm")
+	IsAlarm, _ := this.GetInt64("isalarm")
 
 	//"2017-03-03 12:00:01 科学城机房 3#温湿度 温度过高报警 当前值：38°C"
 	//s := Content
@@ -45,15 +44,15 @@ func (c *EventController) Post() {
 	c.Ctx.Output.Header("Access-Control-Allow-Headers", "X-Requested-With")
 	c.Ctx.Output.Header("Access-Control-Allow-Method", "POST,GET,OPTIONS")
 
-	//url := c.Ctx.Request.RequestURI
-	//	fmt.Println("[" + url + "]")
-	fmt.Println(c.Ctx.Request.RequestURI)
-	//fmt.Println(string(c.Ctx.Input.RequestBody))
-
 	var ob models.Event
 	json.Unmarshal(c.Ctx.Input.RequestBody, &ob)
 
-	fmt.Println(ob.Content)
-	c.Ctx.WriteString(string(c.Ctx.Input.RequestBody))
+	redis.ProcData(ob)
+
+	ret := "{\n"
+	ret += "\"errcode\": \"00001\",\n"
+	ret += "\"errmsg\": \"OK\"\n}\n"
+
+	c.Ctx.WriteString(ret)
 	return
 }

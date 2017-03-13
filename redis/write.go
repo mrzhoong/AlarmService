@@ -12,10 +12,8 @@ func ProcData(event models.Event) {
 		for _, v := range s.EquipGroup {
 			//log.Println("告警源组:", k)
 			if v.Id == event.StrategyID {
-				//log.Println("匹配成功", j)
 				//	send to queue
 				SendToQueue(s.Method, s.To, event)
-				//fmt.Println(s.Method, s.To, event.Content)
 			} else {
 				// fmt.Println("无效事件", j)
 				//	send to mysql

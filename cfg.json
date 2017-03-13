@@ -15,7 +15,7 @@
 			"Name": "暖通"
 		},
 		{
-			"Id": 4,
+			"Id": 5,
 			"Name": "弱电"
 		}],
 		"Name": "值班室",
@@ -120,6 +120,10 @@
 		{
 			"Id": 3,
 			"Name": "暖通4"
+		}
+		,{
+			"Id": 4,
+			"Name": "弱电"
 		}],
 		"Name": "运维组",
 		"Condition": "Condition",
@@ -132,7 +136,7 @@
 			"Name": "sam4",
 			"Mobile": "18503036524",
 			"WeChat": "eqwead_ew1_2",
-			"Email": "xxx@zktz.com"
+			"Email": "80619759@qq.com"
 		}]
 	}]
 }

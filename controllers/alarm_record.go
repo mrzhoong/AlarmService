@@ -3,6 +3,7 @@ package controllers
 import (
 	"AlarmService/models"
 	"github.com/astaxie/beego"
+	"time"
 )
 
 type RecordController struct {
@@ -11,20 +12,27 @@ type RecordController struct {
 
 func (c *RecordController) Get() {
 	c.TplName = "eventlog.html"
+	beginTime := time.Now().Format("2006-01-02 ") + "00:00:00"
+	endTime := time.Now().Format("2006-01-02 15:04:06")
+	c.Data["begin_time"] = beginTime
+	c.Data["end_time"] = endTime
 }
 
 func (c *RecordController) Post() {
 	c.TplName = "eventlog.html"
-	var L []models.SendRecord
-	s := models.SendRecord{Station: "科学城机房", EquipName: "佳力图空调", EventTime: 165854,
-		EventLevel: 1, Tos: "过敏", SendType: "短信", SendTime: 15555, SendStatus: true, Content: "关机"}
-	L = append(L, s)
-	L = append(L, s)
-	L = append(L, s)
-	L = append(L, s)
-	L = append(L, s)
-	L = append(L, s)
-	L = append(L, s)
-	L = append(L, s)
-	c.Data["SendRecord"] = L
+
+	beginTime := c.Input().Get("begin_time")
+	endTime := c.Input().Get("end_time")
+	location := c.Input().Get("station")
+	sendTo := c.Input().Get("send_to")
+	equipName := c.Input().Get("equip_name")
+	sendType := c.Input().Get("send_type")
+
+	records, err := models.GetSendRecord(beginTime, endTime, location, equipName, sendTo, sendType)
+
+	if err != nil {
+		beego.Error(err)
+	}
+
+	c.Data["SendRecord"] = records
 }

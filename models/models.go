@@ -100,21 +100,21 @@ type StrategyInfo struct {
 //	告警事件
 type Event struct {
 	//	事件时间
-	EventTime int64 `json:"eventtime"`
+	EventTime int64 `json:"EventTime"`
 	//	位置信息
-	Location string `json:"eventlocation"`
+	Location string `json:"Location"`
 	//	设备ID
-	EquipID string `json:"equipid"`
+	EquipID string `json:"EquipID"`
 	//	设备名称
-	EquipName string `json:"equipname"`
+	EquipName string `json:"EquipName"`
 	//	事件级别
-	EventLevel int64 `json:"eventlevel"`
+	EventLevel int64 `json:"EventLevel"`
 	//	事件内容
-	Content string `json:"content"`
+	Content string `json:"Content"`
 	//	事件源组
-	StrategyID int64 `json:"strategyid"`
+	StrategyID int64 `json:"StrategyID"`
 	//	是否告警
-	IsAlarm bool `json:"isalarm"`
+	IsAlarm int64 `json:"IsAlarm"`
 }
 
 //  策略
@@ -387,6 +387,13 @@ func AddSendRecord(s *SendRecord) error {
 	return nil
 }
 
-func GetSendRecord() {
+func GetSendRecord(begin, end, location, equip, sendTo, sendType string) ([]*SendRecord, error) {
+	o := orm.NewOrm()
+	records := make([]*SendRecord, 0)
+
+	qs := o.QueryTable("send_record")
+	_, err := qs.All(&records)
+
+	return records, err
 
 }

@@ -16,7 +16,7 @@ import (
 
 func init() {
 	g.LoadConfig()
-	g.LoadCfg("cfg.json")
+	g.LoadCfg("D:\\Development\\src\\AlarmService\\cfg.json")
 	redis.InitConnPool()
 	models.RegisterDB()
 
@@ -47,6 +47,7 @@ func main() {
 	beego.Router("/eventlog", &controllers.RecordController{})
 	beego.Router("/operationlog", &controllers.OperationController{})
 	beego.Router("/config", &controllers.ConfigController{})
+	beego.AutoRouter(&controllers.ConfigController{})
 	beego.Router("/test", &controllers.TestController{})
 	beego.Router("/event", &controllers.EventController{})
 	beego.Run()
