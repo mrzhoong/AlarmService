@@ -13,14 +13,6 @@ type EventController struct {
 }
 
 func (this *EventController) Get() {
-	// c.TplName = "event.html"
-	// EventTime int64
-	// Level int64
-	// Location string
-	// Equip string
-	// EquipId string
-	// Content string
-	// url:= this.URLFor(endpoint, ...)
 	EventTime, _ := this.GetInt64("time")
 	Content := this.GetString("content")
 	StrategyID, _ := this.GetInt64("strategyid")

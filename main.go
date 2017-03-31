@@ -8,15 +8,12 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
-	// "log"
-	// "os"
-	// "os/signal"
-	// "syscall"
 )
 
 func init() {
+	g.SetLog()
 	g.LoadConfig()
-	g.LoadCfg("D:\\Development\\src\\AlarmService\\cfg.json")
+	g.LoadCfg(g.Config().ConfPath)
 	redis.InitConnPool()
 	models.RegisterDB()
 

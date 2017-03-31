@@ -35,4 +35,10 @@ func (c *RecordController) Post() {
 	}
 
 	c.Data["SendRecord"] = records
+	c.Data["begin_time"] = beginTime
+	c.Data["end_time"] = endTime
+	c.Data["send_type"] = sendType
+	c.Data["equip_name"] = equipName
+	c.Data["location"] = location
+	c.Data["send_to"] = sendTo
 }

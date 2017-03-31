@@ -1,8 +1,10 @@
 package controllers
 
 import (
-	//"AlarmService/models"
+	"AlarmService/models"
 	"github.com/astaxie/beego"
+	"log"
+	"strconv"
 )
 
 type TestController struct {
@@ -11,6 +13,10 @@ type TestController struct {
 
 func (c *TestController) Get() {
 	//c.TplName = "home.html"
-	//str, _ := models.GetStrategyGroupInfo()
-	c.Ctx.WriteString("test")
+	id := c.Input().Get("id")
+	log.Println(id)
+	d, _ := strconv.Atoi(id)
+	//str, _ := models.GetUserGroupInfo()
+	str := models.GetUserName(d)
+	c.Ctx.WriteString(str)
 }

@@ -3,6 +3,7 @@ package controllers
 import (
 	"AlarmService/models"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 type StrategyController struct {
@@ -43,12 +44,13 @@ func (this *StrategyController) Post() {
 	methods := this.Input().Get("sending_method")
 	conditions := this.Input().Get("strategy_condition")
 	send_to := this.Input().Get("send_to")
-
 	var err error
 	if len(tid) == 0 {
 		err = models.AddStrategy(name, methods, conditions, send_to)
+		logs.Debug(send_to)
 	} else {
 		err = models.ModifyStrategy(tid, name, methods, conditions, send_to)
+		logs.Info(send_to)
 	}
 
 	if err != nil {
@@ -64,7 +66,6 @@ func (this *StrategyController) Add() {
 
 	this.Data["User"] = []string{"过敏", "张三", "李四", "王五", "赵六"}
 	this.Data["SendType"] = []string{"短信", "电话", "微信", "邮件"}
-	// this.Data["IsLogin"] = true
 
 	return
 }
@@ -86,6 +87,7 @@ func (this *StrategyController) Modify() {
 	tid := this.Input().Get("tid")
 
 	strategy, err := models.GetStrategy(tid)
+	//strategy, tos, sType, err := models.GetStrategyConf(tid)
 	if err != nil {
 		beego.Error(err)
 		this.Redirect("/strategy", 302)
@@ -95,6 +97,9 @@ func (this *StrategyController) Modify() {
 	this.Data["Strategy"] = strategy
 	this.Data["Tid"] = tid
 	this.Data["IsLogin"] = true
+
+	this.Data["User"] = []string{"过敏", "张三", "李四", "王五", "赵六"}
+	this.Data["SendType"] = []string{"短信", "电话", "微信", "邮件"}
 	// return
 }
 

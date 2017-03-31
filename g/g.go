@@ -3,14 +3,15 @@ package g
 import (
 	"encoding/json"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"github.com/toolkits/file"
-	"log"
 	"strconv"
 	"sync"
 )
 
 type GlobalConfig struct {
 	Debug        bool
+	ConfPath     string
 	MailTopic    string
 	RedisAddr    string
 	RedisMaxIdle int
@@ -92,13 +93,15 @@ func LoadConfig() {
 	c.DbUser = beego.AppConfig.String("dbuser")
 	c.DbPwd = beego.AppConfig.String("dbpwd")
 	c.DbName = beego.AppConfig.String("dbname")
+	c.ConfPath = beego.AppConfig.String("path")
 
 	config = &c
 }
 
 func LoadCfg(cfg string) {
+	log := logs.GetLogger("LoadCfg")
 	if cfg == "" {
-		log.Fatalln("use -c to specify configuration file")
+		log.Println("use -c to specify configuration file")
 	}
 
 	if !file.IsExist(cfg) {
@@ -120,4 +123,12 @@ func LoadCfg(cfg string) {
 	defer strategyLock.Unlock()
 	strategys = &c
 	log.Println("read config file:", cfg, "successfully")
+}
+
+func SetLog() {
+	logs.SetLogger(logs.AdapterFile, `{"filename":"alarm_service.log",
+		"level":7,"maxlines":1000000,"maxsize":0,"daily":true,"maxdays":20}`)
+	//	行号、文件名
+	logs.EnableFuncCallDepth(true)
+	logs.Async()
 }

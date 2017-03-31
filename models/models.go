@@ -10,6 +10,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"qiniupkg.com/x/errors.v7"
 	"strconv"
+	//"strings"
+	"log"
 )
 
 // const (
@@ -245,6 +247,39 @@ func GetStrategy(tid string) (*Strategy, error) {
 	return strategy, nil
 }
 
+//	获取某个策略,文本存储
+func GetStrategyConf(tid string) (g.StrategyInfo, string, string, error) {
+
+	var Id int
+	var strategy g.StrategyInfo
+	usr := "["
+	sType := "["
+
+	//	获取单个策略
+	Id, _ = strconv.Atoi(tid)
+	for _, s := range g.Cfg().Strategys {
+		if s.Id == int64(Id) {
+			strategy = s
+		}
+	}
+
+	//	获取策略中的人员列表,返回[]string
+	for _, u := range strategy.To {
+		usr += "'" + u.Name + "',"
+	}
+
+	dst := usr[:len(usr)-1] + "]"
+
+	//	获取策略中的发送方式,返回[]string
+	for _, t := range strategy.Method {
+		sType += "'" + t.Name + "',"
+	}
+
+	dstMethod := sType[:len(sType)-1] + "]"
+
+	return strategy, dst, dstMethod, nil
+}
+
 //	删除策略
 func DeleteStrategy(tid string) error {
 	tidNum, err := strconv.ParseInt(tid, 10, 64)
@@ -303,76 +338,87 @@ func GetStrategyGroupInfo() (err error) {
 	return nil
 }
 
-//	获取人员信息列表
+//	人员信息多表
 func GetUserGroupInfo() (str string, err error) {
 	str = `{"errcode": "00000","info": [["小明","000223"],["小敏","000437"]]}`
-	o := orm.NewOrm()
+	//o := orm.NewOrm()
 	k := orm.NewOrm()
-	s2 := new(StrategyList)
+	//s2 := new(StrategyList)
 	s1 := new(StrategyInfo)
-	s3 := new(SendTo)
-	s4 := new(SendMethod)
+	//s3 := new(SendTo)
+	//s4 := new(SendMethod)
 	////s1.Id = 2
-	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "暖通"})
-	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "高压"})
-	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "低压"})
-	s1.Name = "运维组"
-	s1.Condition = "Condition"
-	s1.Method = append(s1.Method, &SendMethod{Name: "电话"})
-	s1.Method = append(s1.Method, &SendMethod{Name: "微信"})
-	s1.To = append(s1.To, &SendTo{Name: "sam2", Mobile: "18503036522", WeChat: "eqwead_ew1_2", Email: "xxx@zktz.com"})
+	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "告警源：暖通"})
+	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "告警源：高压"})
+	s1.EquipGroup = append(s1.EquipGroup, &StrategyList{Name: "告警源：低压"})
+	s1.Name = "策略名称"
+	s1.Condition = "Contion发送条件"
+	s1.Method = append(s1.Method, &SendMethod{Name: "发送方式：电话"})
+	s1.Method = append(s1.Method, &SendMethod{Name: "发送方式：微信"})
+	s1.To = append(s1.To, &SendTo{Name: "sam1", Mobile: "18503036521", WeChat: "eqwead_ew1_1", Email: "xxx1@zktz.com"})
+	s1.To = append(s1.To, &SendTo{Name: "sam2", Mobile: "18503036522", WeChat: "eqwead_ew1_2", Email: "xxx2@zktz.com"})
+	s1.To = append(s1.To, &SendTo{Name: "sam3", Mobile: "18503036523", WeChat: "eqwead_ew1_3", Email: "xxx3@zktz.com"})
+	s1.To = append(s1.To, &SendTo{Name: "sam4", Mobile: "18503036524", WeChat: "eqwead_ew1_4", Email: "xxx4@zktz.com"})
 
-	s2.StrategyInfos = s1
-	s2.Name = "暖通"
-
-	s3 = &SendTo{Name: "sam2", Mobile: "18503036522", WeChat: "eqwead_ew1_2", Email: "xxx@zktz.com"}
-	s3.StrategyInfos = s1
-
-	s4 = &SendMethod{Name: "电话"}
-	s4.StrategyInfos = s1
+	//s2.StrategyInfos = s1
+	//s2.Name = "暖通9999"
+	//
+	//s3 = &SendTo{Name: "sam9999", Mobile: "18503036522", WeChat: "eqwead_ew1_2", Email: "xxx@zktz.com"}
+	//s3.StrategyInfos = s1
+	//
+	//s4 = &SendMethod{Name: "电话99999"}
+	//s4.StrategyInfos = s1
 	//
 	_, err = k.Insert(s1)
 	if err != nil {
 		fmt.Println(err)
 		return "nil", err
 	}
-	_, err = o.Insert(s2)
-
-	if err != nil {
-		fmt.Println(err)
-		return "nil", err
-	}
-
-	_, err = o.Insert(s3)
-
-	if err != nil {
-		fmt.Println(err)
-		return "nil", err
-	}
-
-	_, err = o.Insert(s4)
-
-	if err != nil {
-		fmt.Println(err)
-		return "nil", err
-	}
+	//_, err = o.Insert(s2)
+	//
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return "nil", err
+	//}
+	//
+	//_, err = o.Insert(s3)
+	//
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return "nil", err
+	//}
+	//
+	//_, err = o.Insert(s4)
+	//
+	//if err != nil {
+	//	fmt.Println(err)
+	//	return "nil", err
+	//}
 	return str, nil
 }
 
 //	获取Id对应的人名信息
-func GetUserName(Id int64) string {
-	user := new(User)
+func GetUserName(Id int) string {
+	var methods []*SendMethod
+	methods = []*SendMethod{}
 	o := orm.NewOrm()
-	qs := o.QueryTable("User")
-	err := qs.Filter("Id", Id).One(user)
+	num, err := o.QueryTable("send_method").Filter("StrategyInfos", Id).RelatedSel().All(&methods)
+	log.Println(num)
 	if err != nil {
-		return "未找到"
+		log.Println(err)
 	}
-
-	return user.Name
+	for k, v := range methods {
+		log.Println(k, v.Id, v.Name)
+	}
+	return "ret"
 }
 
-//	发送记录模块
+func GetAllUser() error {
+	return nil
+}
+
+//	记录模块
+//	记录事件的发送
 func AddSendRecord(s *SendRecord) error {
 	o := orm.NewOrm()
 
@@ -392,7 +438,12 @@ func GetSendRecord(begin, end, location, equip, sendTo, sendType string) ([]*Sen
 	records := make([]*SendRecord, 0)
 
 	qs := o.QueryTable("send_record")
-	_, err := qs.All(&records)
+	_, err := qs.Filter(
+		"send_type__contains", sendType).Filter(
+		"station__contains", location).Filter(
+		"equip_name__contains", equip).Filter(
+		"tos__contains", sendTo).All(
+		&records)
 
 	return records, err
 
