@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func LPUSH(queue, message string, E models.Event) {
+func LPUSH(queue, message string, E models.Event, tos string) {
 	rc := ConnPool.Get()
 	defer rc.Close()
 	_, err := rc.Do("LPUSH", queue, message)
@@ -21,7 +21,7 @@ func LPUSH(queue, message string, E models.Event) {
 	R.SendTime = time.Now().Unix()
 	R.SendType = queue
 	R.Station = E.Location
-	R.Tos = ""
+	R.Tos = tos
 
 	if err != nil {
 		log.Println("LPUSH redis", queue, "fail:", err, "message:", message)
@@ -49,5 +49,5 @@ func WriteSmsModel(sms *models.Sms, E models.Event) {
 		log.Println(err)
 		return
 	}
-	LPUSH("/sms", string(bs), E)
+	LPUSH("/sms", string(bs), E, sms.Tos)
 }

@@ -39,5 +39,5 @@ func WriteMailModel(mail *models.Mail, E models.Event) {
 		return
 	}
 
-	LPUSH("/mail", string(bs), E)
+	LPUSH("/mail", string(bs), E, mail.Tos)
 }
