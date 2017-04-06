@@ -102,21 +102,21 @@ type StrategyInfo struct {
 //	告警事件
 type Event struct {
 	//	事件时间
-	EventTime int64 `json:"EventTime"`
+	EventTime int64 `json:"event_time"`
 	//	位置信息
-	Location string `json:"Location"`
+	Location string `json:"location"`
 	//	设备ID
-	EquipID string `json:"EquipID"`
+	EquipID string `json:"resource_id"`
 	//	设备名称
-	EquipName string `json:"EquipName"`
+	EquipName string `json:"equip_name"`
 	//	事件级别
-	EventLevel int64 `json:"EventLevel"`
+	EventLevel int64 `json:"event_level"`
 	//	事件内容
-	Content string `json:"Content"`
+	Content string `json:"content"`
 	//	事件源组
-	StrategyID int64 `json:"StrategyID"`
+	StrategyID int64 `json:"equip_group"`
 	//	是否告警
-	IsAlarm int64 `json:"IsAlarm"`
+	IsAlarm int64 `json:"is_alarm"`
 }
 
 //  策略
