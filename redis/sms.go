@@ -8,7 +8,7 @@ import (
 	"AlarmService/models"
 )
 
-func LPUSH(queue, message string, E models.Event, tos string) {
+func LPUSH(queue, message string, E models.Event, tos, guid string) {
 	rc := ConnPool.Get()
 	defer rc.Close()
 	_, err := rc.Do("LPUSH", queue, message)
@@ -22,6 +22,7 @@ func LPUSH(queue, message string, E models.Event, tos string) {
 	R.SendType = queue
 	R.Station = E.Location
 	R.Tos = tos
+	R.Guid = guid
 
 	if err != nil {
 		log.Println("LPUSH redis", queue, "fail:", err, "message:", message)
@@ -49,5 +50,5 @@ func WriteSmsModel(sms *models.Sms, E models.Event) {
 		log.Println(err)
 		return
 	}
-	LPUSH("/sms", string(bs), E, sms.Tos)
+	LPUSH("/sms", string(bs), E, sms.Tos, sms.Guid)
 }

@@ -34,5 +34,5 @@ func WritePhoneModel(phone *models.Phone, E models.Event) {
 		return
 	}
 
-	LPUSH("/phone", string(bs), E, phone.Tos)
+	LPUSH("/phone", string(bs), E, phone.Tos, phone.Guid)
 }

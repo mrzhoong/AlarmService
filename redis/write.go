@@ -9,7 +9,6 @@ import (
 
 func ProcData(event models.Event) {
 	for _, s := range g.Cfg().Strategys {
-		//log.Println("strategys NO:", j)
 		for _, v := range s.EquipGroup {
 			//log.Println("告警源组:", k)
 			if v.Id == event.StrategyID {
