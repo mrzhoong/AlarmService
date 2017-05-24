@@ -1,11 +1,11 @@
 package redis
 
 import (
-	//"AlarmService/redis"
-	"AlarmService/models"
 	"encoding/json"
 	"log"
 	"time"
+
+	"AlarmService/models"
 )
 
 func LPUSH(queue, message string, E models.Event, tos string) {

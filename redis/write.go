@@ -3,6 +3,7 @@ package redis
 import (
 	"AlarmService/g"
 	"AlarmService/models"
+
 	"github.com/astaxie/beego/logs"
 )
 
@@ -30,9 +31,9 @@ func SendToQueue(L []g.SendMethod, M []g.SendTo, E models.Event) error {
 		case "邮件":
 			SendEmail("/mail", M, E)
 		case "微信":
-			SendWeChat("/wechat", M)
+			SendWeChat("/wechat", M, E)
 		case "电话":
-			SendPhone("/phone", M)
+			SendPhone("/phone", M, E)
 		}
 	}
 	return nil
@@ -54,16 +55,17 @@ func SendEmail(queue string, M []g.SendTo, E models.Event) error {
 	return nil
 }
 
-func SendWeChat(queue string, M []g.SendTo) error {
+func SendWeChat(queue string, M []g.SendTo, E models.Event) error {
 	for k, v := range M {
 		logs.GetLogger("WECHAT").Println(queue, v.WeChat, "No:", k)
 	}
 	return nil
 }
 
-func SendPhone(queue string, M []g.SendTo) error {
+func SendPhone(queue string, M []g.SendTo, E models.Event) error {
 	for k, v := range M {
 		logs.GetLogger("PHONE").Println(queue, v.Mobile, "No:", k)
+		WritePhone(v.Mobile, E)
 	}
 	return nil
 }

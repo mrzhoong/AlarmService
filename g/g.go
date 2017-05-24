@@ -2,11 +2,12 @@ package g
 
 import (
 	"encoding/json"
+	"strconv"
+	"sync"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/toolkits/file"
-	"strconv"
-	"sync"
 )
 
 type GlobalConfig struct {

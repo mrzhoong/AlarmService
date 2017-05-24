@@ -1,0 +1,77 @@
+{
+	"Count": 2,
+	"Strategys": [{
+		"Id": 1,
+		"EquipGroup": [{
+			"Id": 1,
+			"Name": "高压"
+		},
+		{
+			"Id": 5,
+			"Name": "弱电"
+		}],
+		"Name": "值班室",
+		"Condition": "Condition",
+		"Method": [{
+			"Id": 1,
+			"Name": "短信"
+		},
+		{
+			"Id": 4,
+			"Name": "邮件"
+		},
+		{
+			"Id": 3,
+			"Name": "微信"
+		}],
+		"To": [{
+			"Id": 1,
+			"Name": "张三",
+			"Mobile": "18500009999",
+			"WeChat": "wechat_1_1",
+			"Email": "80619759@qq.com"
+		},
+		{
+			"Id": 2,
+			"Name": "李四999",
+			"Mobile": "18600008888",
+			"WeChat": "wechat_1_2",
+			"Email": "75163921@qq.com"
+		}]
+	},
+	{
+		"Id": 2,
+		"EquipGroup": [{
+			"Id": 1,
+			"Name": "高压"
+		},
+		{
+			"Id": 2,
+			"Name": "低压"
+		},
+		{
+			"Id": 3,
+			"Name": "暖通"
+		}
+		,{
+			"Id": 4,
+			"Name": "弱电"
+		}],
+		"Name": "运维组",
+		"Condition": "Condition",
+		"Method": [{
+			"Id": 4,
+			"Name": "邮件"
+		},{
+		"Id": 1,
+			"Name": "短信"
+		}],
+		"To": [{
+			"Id": 1,
+			"Name": "sam4",
+			"Mobile": "18503036524",
+			"WeChat": "eqwead_ew1_2",
+			"Email": "80619759@qq.com"
+		}]
+	}]
+}

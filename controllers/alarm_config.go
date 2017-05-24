@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"AlarmService/g"
+
 	"github.com/astaxie/beego"
 )
 

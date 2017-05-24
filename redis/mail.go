@@ -1,10 +1,12 @@
 package redis
 
 import (
-	"AlarmService/models"
 	"encoding/json"
-	"github.com/astaxie/beego/logs"
 	"time"
+
+	"AlarmService/models"
+
+	"github.com/astaxie/beego/logs"
 )
 
 func WriteMail(tos string, subject string, E models.Event) {

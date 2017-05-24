@@ -1,9 +1,11 @@
 package controllers
 
 import (
-	"AlarmService/models"
-	"github.com/astaxie/beego"
 	"time"
+
+	"AlarmService/models"
+
+	"github.com/astaxie/beego"
 )
 
 type RecordController struct {

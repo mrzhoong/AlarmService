@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"AlarmService/models"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 )

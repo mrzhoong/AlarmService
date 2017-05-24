@@ -1,10 +1,12 @@
 package redis
 
 import (
-	"AlarmService/g"
-	"github.com/garyburd/redigo/redis"
 	"log"
 	"time"
+
+	"AlarmService/g"
+
+	"github.com/garyburd/redigo/redis"
 )
 
 var ConnPool *redis.Pool

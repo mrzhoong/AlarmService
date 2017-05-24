@@ -1,11 +1,12 @@
 package controllers
 
 import (
+	"encoding/json"
+
 	"AlarmService/models"
 	"AlarmService/redis"
+
 	"github.com/astaxie/beego"
-	// "log"
-	"encoding/json"
 )
 
 type EventController struct {

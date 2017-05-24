@@ -1,17 +1,16 @@
 package models
 
 import (
-	"AlarmService/g"
-	//"AlarmService/redis"
-	// "encoding/json"
 	"fmt"
+	"log"
+	"strconv"
+
+	"AlarmService/g"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	"qiniupkg.com/x/errors.v7"
-	"strconv"
-	//"strings"
-	"log"
 )
 
 // const (
@@ -23,20 +22,31 @@ import (
 
 //	短信
 type Sms struct {
+	Guid    string `json:"guid"`
 	Tos     string `json:"tos"`
 	Content string `json:"content"`
 }
 
 //	邮件内容
 type Mail struct {
+	Guid    string `json:"guid"`
 	Tos     string `json:"tos"`
 	Subject string `json:"subject"`
 	Content string `json:"content"`
 }
 
+//	电话内容
+type Phone struct {
+	Guid    string `json:"guid"`
+	Tos     string `json:"tos"`
+	Content string `json:"tos"`
+}
+
 //	发送记录
 type SendRecord struct {
 	Id int64
+	//	Guid
+	Guid string
 	//	站点
 	Station string
 	//	设备名称
